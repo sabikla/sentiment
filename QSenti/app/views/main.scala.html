@@ -1,0 +1,40 @@
+@(title : String, loginForm : Form[LoginInfo])(implicit request: RequestHeader)
+ 
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <script src="@routes.Assets.at("javascripts/hello.js")" type="text/javascript"></script>
+    </head>
+    <body>
+        <div class="login-outer">
+            @if(request.flash.get("error").getOrElse("")!=""){
+              <div class="alert alert-danger">              
+                @request.flash.get("error").getOrElse("")
+              </div>
+            }
+            @if(request.flash.get("success").getOrElse("")!=""){
+              <div class="alert alert-success">              
+                @request.flash.get("success").getOrElse("")
+              </div>
+            }
+        	<div class="panel panel-primary">
+        		<div class="panel-heading">QSenti Login</div>
+        		<div class="panel-body">
+                    <img class="" style="border-radius: 15px; width: 150px;" src="@routes.Assets.at("images/favicon.png")">
+        		@helper.form(action = routes.Login.doLogin) {	
+		    		@helper.inputText(loginForm("username"), '_label -> "Username", 'required -> "required" , '_showConstraints -> false ,  'class -> "form-control")
+		    		@helper.inputPassword(loginForm("password"), '_label -> "Password" , 'required -> "required" , '_showConstraints -> false, 'class -> "form-control")
+		    		<input type="submit" value="Submit" class="btn btn-primary" >
+				}
+        		
+                
+        		
+        		</div>        		
+        	</div>   
+        </div>
+    </body>
+</html>
